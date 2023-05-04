@@ -107,7 +107,7 @@ class EasterEggsSkill(OVOSSkill):
         files = [mp3 for mp3 in listdir(path) if ".mp3" in mp3]
         if len(files):
             mp3 = path + "/" + random.choice(files)
-            self.play_sound(mp3)
+            self.play_audio(mp3)
         else:
             self.speak_dialog("bad_file")
 
@@ -116,7 +116,7 @@ class EasterEggsSkill(OVOSSkill):
         files = [mp3 for mp3 in listdir(path) if ".mp3" in mp3]
         if len(files):
             mp3 = path + "/" + random.choice(files)
-            self.play_sound(mp3)
+            self.play_audio(mp3)
         else:
             self.speak_dialog("bad_file")
 
@@ -125,7 +125,7 @@ class EasterEggsSkill(OVOSSkill):
         files = [wav for wav in listdir(path) if ".wav" in wav]
         if len(files):
             wav = path + "/" + random.choice(files)
-            self.play_sound(wav)
+            self.play_audio(wav)
         else:
             self.speak_dialog("bad_file")
 
@@ -134,7 +134,7 @@ class EasterEggsSkill(OVOSSkill):
         files = [wav for wav in listdir(path) if ".wav" in wav]
         if len(files):
             wav = path + "/" + random.choice(files)
-            self.play_sound(wav)
+            self.play_audio(wav)
         else:
             self.speak_dialog("bad_file")
 
@@ -143,7 +143,7 @@ class EasterEggsSkill(OVOSSkill):
         files = [mp3 for mp3 in listdir(path) if ".mp3" in mp3]
         if len(files):
             mp3 = path + "/" + random.choice(files)
-            self.play_sound(mp3)
+            self.play_audio(mp3)
         else:
             self.speak_dialog("bad_file")
 
@@ -152,7 +152,7 @@ class EasterEggsSkill(OVOSSkill):
         files = [mp3 for mp3 in listdir(path) if ".mp3" in mp3]
         if len(files):
             mp3 = path + "/" + random.choice(files)
-            self.play_sound(mp3)
+            self.play_audio(mp3)
         else:
             self.speak_dialog("bad_file")
 
