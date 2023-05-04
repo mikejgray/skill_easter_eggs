@@ -98,7 +98,7 @@ class Stardate:
         l = F * 125000000
         h = h + ((l >> 32) & 0xFFFFFFFFFFFFFFFF)
         h = h / (27 * 146097)
-        ret = "[%d]%05d" % (nissue, ((h / 1000000) & 0xFFFFFFFFFFFFFFFF))
+        ret = "[%d]%05d" % (nissue, ((h // 1000000) & 0xFFFFFFFFFFFFFFFF))
         ret += ".%06d" % (h % 1000000)
         return ret
 
