@@ -48,7 +48,7 @@ def get_requirements(requirements_filename: str):
 
 
 def find_resource_files():
-    resource_base_dirs = ("locale", "vocab", "dialog", "regex")  # Removed "ui"
+    resource_base_dirs = ("locale", "vocab", "dialog", "regex", "sounds")  # Removed "ui"
     base_dir = BASE_PATH
     package_data = ["skill.json"]
     for res in resource_base_dirs:
