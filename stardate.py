@@ -49,7 +49,7 @@ class Stardate:
             diff = self.ufpepoch - S
             nsecs = 2000 * self.dayseconds - 1 - (diff % (2000 * self.dayseconds))
             isneg = True
-            nissue = 1 + ((diff / (2000 * self.dayseconds)) & 0xFFFFFFFF)
+            nissue = 1 + ((diff // (2000 * self.dayseconds)) & 0xFFFFFFFFFFFFFFFF)
             integer = nsecs / (self.dayseconds / 5)
             frac = (((nsecs % (self.dayseconds / 5)) << 32) | F) * 50
         elif S < self.tngepoch:
@@ -57,7 +57,7 @@ class Stardate:
             diff = S - self.ufpepoch
             nsecs = diff % (2000 * self.dayseconds)
             isneg = False
-            nissue = (diff / (2000 * self.dayseconds)) & 0xFFFFFFFF
+            nissue = (diff // (2000 * self.dayseconds)) & 0xFFFFFFFFFFFFFFFF
 
             if nissue < 19 or (nissue == 19 and nsecs < (7340 * (self.dayseconds / 5))):
                 # TOS era
@@ -82,7 +82,7 @@ class Stardate:
                     frac = ((nsecs % (self.dayseconds * 10)) << 32) | F
 
         ret = "[" + ("-" if isneg else "") + str(nissue) + "]" + str(integer).zfill(4)
-        frac = (((frac * 125) / 108) >> 32) & 0xFFFFFFFF  # round
+        frac = (((frac * 125) / 108) >> 32) & 0xFFFFFFFFFFFFFFFF  # round
         ret += "." + str(frac)
         return ret
 
@@ -96,9 +96,9 @@ class Stardate:
         # divide that by 1000000.
         h = nsecs * 125000000
         l = F * 125000000
-        h = h + ((l >> 32) & 0xFFFFFFFF)
+        h = h + ((l >> 32) & 0xFFFFFFFFFFFFFFFF)
         h = h / (27 * 146097)
-        ret = "[%d]%05d" % (nissue, ((h / 1000000) & 0xFFFFFFFF))
+        ret = "[%d]%05d" % (nissue, ((h / 1000000) & 0xFFFFFFFFFFFFFFFF))
         ret += ".%06d" % (h % 1000000)
         return ret
 
@@ -211,8 +211,8 @@ class Stardate:
             #  54 and a divide by 3125.
             f = (frac << 32) * 54
             f = (f + 3124) / 3125
-            S = S + ((f >> 32) & 0xFFFFFFFF)
-            F = f & 0xFFFFFFFF
+            S = S + ((f >> 32) & 0xFFFFFFFFFFFFFFFF)
+            F = f & 0xFFFFFFFFFFFFFFFF
 
             if isneg:
                 # Subtract off the issue that was added above.
@@ -234,7 +234,7 @@ class Stardate:
 
             t = (t % 125000000) << 32
             t = (t + 124999999) / 125000000
-            F = t & 0xFFFFFFFF
+            F = t & 0xFFFFFFFFFFFFFFFF
 
         return self.calout(S, F)
 
@@ -270,7 +270,7 @@ class Stardate:
         # Now correct the year to an actual year number (see notes above).
         year = year - 399
 
-        return self.docalout(year % 400, year, days & 0xFFFFFFFF, tod)
+        return self.docalout(year % 400, year, days & 0xFFFFFFFFFFFFFFFF, tod)
 
     def docalout(self, cycle, year, ndays, tod):
         nmonth = 0
