@@ -20,7 +20,8 @@ import random
 from os import listdir
 from os.path import dirname
 
-from adapt.intent import IntentBuilder, intent_handler
+from ovos_utils.intents import IntentBuilder
+from ovos_workshop.decorators import intent_handler
 from ovos_workshop.skills import OVOSSkill
 
 from .stardate import StarDate

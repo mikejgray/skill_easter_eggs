@@ -8,7 +8,8 @@ from os.path import dirname, join, exists
 from mock import Mock
 from mycroft_bus_client import Message
 from ovos_utils.messagebus import FakeBus
-from neon_utils.configuration_utils import get_neon_local_config, get_neon_user_config
+
+# from neon_utils.configuration_utils import get_neon_local_config, get_neon_user_config
 
 from mycroft.skills.skill_loader import SkillLoader
 
@@ -28,11 +29,8 @@ class TestSkill(unittest.TestCase):
             mkdir(cls.test_fs)
 
         # Override the configuration and fs paths to use the test directory
-        cls.skill.local_config = get_neon_local_config(cls.test_fs)
-        cls.skill.user_config = get_neon_user_config(cls.test_fs)
         cls.skill.settings_write_path = cls.test_fs
         cls.skill.file_system.path = cls.test_fs
-        cls.skill._init_settings()
         cls.skill.initialize()
 
         # Override speak and speak_dialog to test passed arguments
@@ -57,9 +55,9 @@ class TestSkill(unittest.TestCase):
 
     def test_00_skill_init(self):
         # Test any parameters expected to be set in init or initialize methods
-        from neon_utils.skills import NeonSkill
+        from ovos_workshop.skills import OVOSSkill
 
-        self.assertIsInstance(self.skill, NeonSkill)
+        self.assertIsInstance(self.skill, OVOSSkill)
         # TODO: Test parameters declared in skill init/initialize here
 
     # TODO: Add tests for all intent handlers and support methods here
