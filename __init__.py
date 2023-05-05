@@ -23,7 +23,7 @@ from os.path import dirname
 from adapt.intent import IntentBuilder
 from ovos_workshop.skills import OVOSSkill
 
-from .stardate import Stardate
+from .stardate import StarDate
 
 __author__ = "jarbas"
 
@@ -77,7 +77,7 @@ class EasterEggsSkill(OVOSSkill):
         self.register_intent(intent, self.handle_glados_intent)
 
     def handle_stardate_intent(self, _):
-        sd = Stardate().toStardate()
+        sd = StarDate().toStardate()
         self.speak_dialog("stardate", {"stardate": sd})
 
     def handle_pod_intent(self, _):
