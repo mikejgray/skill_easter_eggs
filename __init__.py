@@ -77,7 +77,7 @@ class EasterEggsSkill(OVOSSkill):
         self.register_intent(intent, self.handle_glados_intent)
 
     def handle_stardate_intent(self, _):
-        sd = StarDate().toStardate()
+        sd = StarDate().getStardate()
         self.speak_dialog("stardate", {"stardate": sd})
 
     def handle_pod_intent(self, _):
