@@ -20,7 +20,7 @@ import random
 from os import listdir
 from os.path import dirname
 
-from adapt.intent import IntentBuilder
+from adapt.intent import IntentBuilder, intent_handler
 from ovos_workshop.skills import OVOSSkill
 
 from .stardate import StarDate
@@ -32,57 +32,22 @@ class EasterEggsSkill(OVOSSkill):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def initialize(self):
-        stardate_intent = IntentBuilder("StardateIntent").require("StardateKeyword").build()
-        self.register_intent(stardate_intent, self.handle_stardate_intent)
-
-        intent = IntentBuilder("PodBayDoorsIntent").require("PodBayDoorsKeyword").build()
-        self.register_intent(intent, self.handle_pod_intent)
-
-        intent = IntentBuilder("LanguagesYouSpeakIntent").require("LanguagesYouSpeakKeyword").build()
-        self.register_intent(intent, self.handle_number_of_languages_intent)
-
-        intent = (
-            IntentBuilder("RoboticsLawsIntent")
-            .require("RoboticsKeyword")
-            .require("LawKeyword")
-            .optionally("LawOfRobotics")
-            .build()
-        )
-        self.register_intent(intent, self.handle_robotic_laws_intent)
-
-        intent = (
-            IntentBuilder("rock_paper_scissors_lizard_spock_Intent")
-            .require("rock_paper_scissors_lizard_spock_Keyword")
-            .build()
-        )
-        self.register_intent(intent, self.handle_rock_paper_scissors_lizard_spock_intent)
-
-        intent = IntentBuilder("PortalIntent").require("PortalKeyword").build()
-        self.register_intent(intent, self.handle_portal_intent)
-
-        intent = IntentBuilder("DukeNukemIntent").require("DukeNukemKeyword").build()
-        self.register_intent(intent, self.handle_dukenukem_intent)
-
-        intent = IntentBuilder("HALIntent").require("HALKeyword").build()
-        self.register_intent(intent, self.handle_hal_intent)
-
-        intent = IntentBuilder("BenderIntent").require("BenderKeyword").build()
-        self.register_intent(intent, self.handle_bender_intent)
-
-        intent = IntentBuilder("ArnoldIntent").require("ArnoldKeyword").build()
-        self.register_intent(intent, self.handle_arnold_intent)
-
-        intent = IntentBuilder("GladosIntent").require("GladosKeyword").build()
-        self.register_intent(intent, self.handle_glados_intent)
-
+    @intent_handler(IntentBuilder("StardateIntent").require("StardateKeyword").build())
     def handle_stardate_intent(self, _):
         sd = StarDate().getStardate()
         self.speak_dialog("stardate", {"stardate": sd})
 
+    @intent_handler(IntentBuilder("PodBayDoorsIntent").require("PodBayDoorsKeyword").build())
     def handle_pod_intent(self, _):
         self.speak_dialog("pod")
 
+    @intent_handler(
+        IntentBuilder("RoboticsLawsIntent")
+        .require("RoboticsKeyword")
+        .require("LawKeyword")
+        .optionally("LawOfRobotics")
+        .build()
+    )
     def handle_robotic_laws_intent(self, message):
         law = str(message.data.get("LawOfRobotics", "all"))
         if law == "1":
@@ -96,12 +61,19 @@ class EasterEggsSkill(OVOSSkill):
             self.speak_dialog("rule2")
             self.speak_dialog("rule3")
 
+    @intent_handler(
+        IntentBuilder("rock_paper_scissors_lizard_spock_Intent")
+        .require("rock_paper_scissors_lizard_spock_Keyword")
+        .build()
+    )
     def handle_rock_paper_scissors_lizard_spock_intent(self, _):
         self.speak_dialog("rock_paper_scissors_lizard_spock")
 
+    @intent_handler(IntentBuilder("LanguagesYouSpeakIntent").require("LanguagesYouSpeakKeyword").build())
     def handle_number_of_languages_intent(self, _):
         self.speak_dialog("languages")
 
+    @intent_handler(IntentBuilder("PortalIntent").require("PortalKeyword").build())
     def handle_portal_intent(self, _):
         path = dirname(__file__) + "/sounds/portal"
         files = [mp3 for mp3 in listdir(path) if ".mp3" in mp3]
@@ -111,6 +83,7 @@ class EasterEggsSkill(OVOSSkill):
         else:
             self.speak_dialog("bad_file")
 
+    @intent_handler(IntentBuilder("HALIntent").require("HALKeyword").build())
     def handle_hal_intent(self, _):
         path = dirname(__file__) + "/sounds/hal"
         files = [mp3 for mp3 in listdir(path) if ".mp3" in mp3]
@@ -120,6 +93,7 @@ class EasterEggsSkill(OVOSSkill):
         else:
             self.speak_dialog("bad_file")
 
+    @intent_handler(IntentBuilder("DukeNukemIntent").require("DukeNukemKeyword").build())
     def handle_dukenukem_intent(self, _):
         path = dirname(__file__) + "/sounds/dukenukem"
         files = [wav for wav in listdir(path) if ".wav" in wav]
@@ -129,6 +103,7 @@ class EasterEggsSkill(OVOSSkill):
         else:
             self.speak_dialog("bad_file")
 
+    @intent_handler(IntentBuilder("ArnoldIntent").require("ArnoldKeyword").build())
     def handle_arnold_intent(self, _):
         path = dirname(__file__) + "/sounds/arnold"
         files = [wav for wav in listdir(path) if ".wav" in wav]
@@ -138,6 +113,7 @@ class EasterEggsSkill(OVOSSkill):
         else:
             self.speak_dialog("bad_file")
 
+    @intent_handler(IntentBuilder("BenderIntent").require("BenderKeyword").build())
     def handle_bender_intent(self, _):
         path = dirname(__file__) + "/sounds/bender"
         files = [mp3 for mp3 in listdir(path) if ".mp3" in mp3]
@@ -147,6 +123,7 @@ class EasterEggsSkill(OVOSSkill):
         else:
             self.speak_dialog("bad_file")
 
+    @intent_handler(IntentBuilder("GladosIntent").require("GladosKeyword").build())
     def handle_glados_intent(self, _):
         path = dirname(__file__) + "/sounds/glados"
         files = [mp3 for mp3 in listdir(path) if ".mp3" in mp3]
